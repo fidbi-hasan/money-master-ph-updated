@@ -1,50 +1,48 @@
-const calculateExpense = () => {
-  const income = document.querySelector("#income").value;
-  const food = document.querySelector("#food").value;
-  const rent = document.querySelector("#rent").value;
-  const clothes = document.querySelector("#clothes").value;
-  // const clothes = document.querySelectorAll("#clothes")[0].value;
+document.getElementById('calculate-btn').addEventListener('click', () => {
+  const income = getInputFieldValueById("income");
+  const food = getInputFieldValueById("food");
+  const rent = getInputFieldValueById("rent");
+  const clothes = getInputFieldValueById("clothes");
 
-  if (
-    income < 0 ||
-    income == "" ||
-    food < 0 ||
-    food == "" ||
-    rent < 0 ||
-    rent == "" ||
-    clothes < 0 ||
-    clothes == ""
-  ) {
+  // check for negative inputs (invalid)
+  if (income < 0 || food < 0 || rent < 0 || clothes < 0) {
     alert("Inputs must be positive numbers");
     return;
   }
+
+  // check for empty fields (invalid)
+  if (isNaN(income) || isNaN(food) || isNaN(rent) || isNaN(clothes)) {
+    alert("Input fields cannot be empty!");
+    return;
+  }
+  
   // calculate expense
-  const expense =
-    parseInt(food) + parseInt(rent) + parseInt(clothes);
+  const expense = food + rent + clothes;
 
   // calculate balance
-  const balance = parseInt(income) - expense;
+  const balance = income - expense;
 
   //   validate income
-  if (expense > income.value) {
+  if (expense > income) {
     alert("Expenses cannot be more than income");
   } else {
     // view total expense and balance
     document.getElementById("total-expense").innerText = expense;
     document.getElementById("balance").innerText = balance;
   }
-};
+});
 
-const calculateSavings = () => {
+document.getElementById('calculate-savings-btn').addEventListener('click', () => {
   // calculate saving amount
-  const savePercentage = document.getElementById("save").value;
-  const income = document.getElementById('income').value;
-//   Validate saving percentage value
+  const savePercentage = getInputFieldValueById("save");
+  const income = getInputFieldValueById('income');
+
+  // Validate saving percentage value
   if (savePercentage < 0) {
     alert("Provide positive saving value");
   }
   
-  const savingAmount = (savePercentage / 100) * income;
+  const savingAmount = income * (savePercentage / 100);
 
   // calculate remaining balance
   const balance = document.getElementById("balance").innerText;
@@ -58,4 +56,4 @@ const calculateSavings = () => {
     document.getElementById("saving-amount").innerText = savingAmount;
     document.getElementById("remaining-balance").innerText = remainingBalance;
   }
-};
+});
